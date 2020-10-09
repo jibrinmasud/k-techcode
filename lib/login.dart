@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:ktechcode/auth.dart';
+import 'package:ktechcode/loader.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+
+  final AuthServices _auth = AuthServices();
+  final _formKey = GlobalKey<FormState>();
+  bool loading = false;
+
+  //text state
+  String email= '';
+  String password='';
+  String error='';
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loader() : Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepOrangeAccent,
         title: Text('Login'),
         centerTitle: true,
+        actions: [
+          FlatButton.icon(
+              icon: Icon(Icons.add, color: Colors.white,),
+              label: Text('Register', style: TextStyle(color: Colors.white),),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/register');
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(2.0),
+      body: Form(
+        key: _formKey,
         child: Column(
           children: [
             IconButton(
@@ -27,7 +48,17 @@ class _LoginState extends State<Login> {
                 children: [
                   Text('Email:', style: TextStyle(fontFamily: 'Poiret',fontSize: 20),),
                   SizedBox(height: 5,),
-                  TextField(
+                  TextFormField(
+                    validator: (val){if (val.isEmpty) {
+                      return 'Please Enter Your Email';
+                    }
+                    return null;
+                    },
+                    onChanged: (val){
+                      setState(() {
+                        email=val;
+                      });
+                    },
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.deepOrangeAccent),
@@ -48,7 +79,13 @@ class _LoginState extends State<Login> {
                 children: [
                   Text('Password:', style: TextStyle(fontFamily: 'Poiret',fontSize: 20),),
                   SizedBox(height: 5,),
-                  TextField(
+                  TextFormField(
+                    validator: (val)=> val.length <6 ? 'Password most be more than 6 character' : null,
+                    onChanged: (val){
+                      setState(() {
+                        password = val;
+                      });
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -69,10 +106,6 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FlatButton(
-                  child: Text('Sign Up'),
-                  onPressed: (){},
-                ),
-                FlatButton(
                   child: Text('Forget Password?'),
                   onPressed: (){},
                 ),
@@ -80,12 +113,30 @@ class _LoginState extends State<Login> {
             ),
             Center(
               child: RaisedButton(
-                onPressed: (){
-                  Navigator.pushReplacementNamed(context, '/home');
+                onPressed: () async{
+                  if(_formKey.currentState.validate()){
+                    setState(() {
+                      loading = true;
+                    });
+                    dynamic result = await _auth.loginWithEmailAndPassword(email, password);
+                    if(result==null){
+                      setState(() {
+                        error='Enter a Valid Email And Password';
+                        loading = false;
+                      });
+                    }else{
+                      Navigator.pushReplacementNamed(context, '/home');
+                    }
+                   }
                 },
                 child: Text('Login', style: TextStyle( fontSize: 30, fontFamily: 'Barlow'), ),
               ),
-            )
+            ),
+            SizedBox(height:10.0),
+            Text(
+              error,
+              style: TextStyle(fontSize: 20.0, color: Colors.red),
+            ),
           ],
         ),
       ),

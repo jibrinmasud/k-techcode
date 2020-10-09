@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ktechcode/login.dart';
 import 'package:ktechcode/pages/css.dart';
@@ -8,9 +9,12 @@ import 'package:ktechcode/pages/home.dart';
 import 'package:ktechcode/pages/mysql.dart';
 import 'package:ktechcode/pages/php.dart';
 import 'package:ktechcode/pages/python.dart';
-void main() {
+import 'register.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
-    debugShowCheckedModeBanner:false,
+    // debugShowCheckedModeBanner:false,
     initialRoute: '/',
     routes: {
       '/': (context) => Loading(),
@@ -22,6 +26,7 @@ void main() {
       '/php': (context) =>Php(),
       '/mysql': (context) =>Mysql(),
       '/python': (context) =>Python(),
+      '/register': (context) =>Register(),
     },
   ));
 }

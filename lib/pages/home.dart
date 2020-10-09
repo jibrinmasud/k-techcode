@@ -1,12 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
+import 'package:ktechcode/auth.dart';
+import 'package:ktechcode/login.dart';
+import 'package:provider/provider.dart';
 
-class _HomeState extends State<Home> {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AuthServices _auth = AuthServices();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepOrange,
@@ -17,6 +18,15 @@ class _HomeState extends State<Home> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          FlatButton.icon(
+            icon: Icon(Icons.person, color: Colors.white,),
+            label: Text('Logout', style: TextStyle(color: Colors.white),),
+            onPressed: () async{
+              await _auth.signOut();
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding:  EdgeInsets.only(left: 20, top:0, right: 20 ),
@@ -45,8 +55,8 @@ class _HomeState extends State<Home> {
               child: TextField(
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepOrangeAccent),
-                    borderRadius: BorderRadius.all(Radius.circular(40))
+                      borderSide: BorderSide(color: Colors.deepOrangeAccent),
+                      borderRadius: BorderRadius.all(Radius.circular(40))
                   ),
                   hintText: 'Search for a course',
                   focusedBorder: OutlineInputBorder(
@@ -54,8 +64,8 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.all(Radius.circular(40))
                   ),
                   prefixIcon: Icon(Icons.search),
+                ),
               ),
-            ),
             ),
             SizedBox(height: 10),
             Row(
@@ -99,27 +109,27 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     onTap: () {
-                     Navigator.pushNamed(context, '/htmloutline');
+                      Navigator.pushNamed(context, '/htmloutline');
                     },
                   ),
-                      InkWell(
-                        child: Container(
-                          padding: EdgeInsets.all(20.0),
-                          child:Column(
-                            children: [
-                              Text('CSS', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontFamily: 'Barlow', color: Colors.white),),
-                              Text('Our CSS tutorial is a learning game that will teach you how to set and control the style and layout of a website.', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontFamily: 'Poiret', color: Colors.white),),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.deepOrangeAccent,
-                              borderRadius: BorderRadius.circular(16)
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/css');
-                        },
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      child:Column(
+                        children: [
+                          Text('CSS', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontFamily: 'Barlow', color: Colors.white),),
+                          Text('Our CSS tutorial is a learning game that will teach you how to set and control the style and layout of a website.', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontFamily: 'Poiret', color: Colors.white),),
+                        ],
                       ),
+                      decoration: BoxDecoration(
+                          color: Colors.deepOrangeAccent,
+                          borderRadius: BorderRadius.circular(16)
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/css');
+                    },
+                  ),
                   InkWell(
                     child: Container(
                       padding: EdgeInsets.all(20.0),
@@ -196,7 +206,7 @@ class _HomeState extends State<Home> {
                       Navigator.pushNamed(context, '/python');
                     },
                   ),
-                    ],
+                ],
               ),
             )
           ],
