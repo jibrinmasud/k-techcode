@@ -38,10 +38,7 @@ class _LoginState extends State<Login> {
         key: _formKey,
         child: Column(
           children: [
-            IconButton(
-              icon: Icon(Icons.lock, size: 70,),
-            ),
-            SizedBox(height:50,),
+            SizedBox(height:20,),
             Container(
               padding: EdgeInsets.all(5),
               child: Column(
@@ -132,7 +129,7 @@ class _LoginState extends State<Login> {
                 child: Text('Login', style: TextStyle( fontSize: 30, fontFamily: 'Barlow'), ),
               ),
             ),
-            SizedBox(height:10.0),
+            SizedBox(height:10),
             Text(
               error,
               style: TextStyle(fontSize: 20.0, color: Colors.red),

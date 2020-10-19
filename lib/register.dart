@@ -36,13 +36,12 @@ class _RegisterState extends State<Register> {
         key: _formKey,
         child: Column(
           children: [
-            SizedBox(height:20,),
+            SizedBox(height:10),
             Container(
                 padding: EdgeInsets.all(5),
                 child: Column(
                   children: [
                     Text('FullName:', style: TextStyle(fontFamily: 'Poiret',fontSize: 20),),
-                    SizedBox(height: 5,),
                     TextFormField(
                       validator: (val){if (val.isEmpty) {
                         return 'Please Enter Your Email';
@@ -68,13 +67,11 @@ class _RegisterState extends State<Register> {
                   ],
                 )
             ),
-            SizedBox(height:10,),
+            SizedBox(height:4,),
             Container(
-                padding: EdgeInsets.all(5),
                 child: Column(
                   children: [
                     Text('Email:', style: TextStyle(fontFamily: 'Poiret',fontSize: 20),),
-                    SizedBox(height: 5,),
                     TextFormField(
                       validator: (val){if (val.isEmpty) {
                         return 'Please Enter Your Email';
@@ -101,7 +98,6 @@ class _RegisterState extends State<Register> {
                 )
             ),
             Container(
-                padding: EdgeInsets.all(5),
                 child: Column(
                   children: [
                     Text('Password:', style: TextStyle(fontFamily: 'Poiret',fontSize: 20),),
@@ -146,13 +142,13 @@ class _RegisterState extends State<Register> {
                     }
                   }
                 },
-                child: Text('Register', style: TextStyle( fontSize: 30, fontFamily: 'Barlow'), ),
+                child: Text('Register', style: TextStyle( fontSize: 15, fontFamily: 'Barlow'), ),
               ),
             ),
-            SizedBox(height:10.0),
+            SizedBox(height:5),
             Text(
               error,
-              style: TextStyle(fontSize: 20.0, color: Colors.red),
+              style: TextStyle(fontSize: 10.0, color: Colors.red),
             )
           ],
         ),
